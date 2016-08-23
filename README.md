@@ -1,2 +1,2 @@
 # inventoryManagement
-simple inventory application
+andela inventory management system
