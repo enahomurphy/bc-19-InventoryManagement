@@ -5,10 +5,10 @@ var mongoose = require('mongoose');
 var db = require('./models/db_connect');
 db(mongoose, 'andela-inventory');
 
-user.find(function (err, users) {
+user.findOne(function (err, users) {
     if(err)
          console.log(err);
     else{
-         console.log(users);
+         console.log(users.created_at.getFullYear());
     }
 });

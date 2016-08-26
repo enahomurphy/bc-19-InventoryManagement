@@ -19,7 +19,7 @@ var assetsSchema = new schema({
     serial_no :{
         type : String,
         required : true,
-        unique : true,
+        unique : true
     },
     price : Number,
 

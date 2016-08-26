@@ -13,7 +13,7 @@ module.exports = function (user) {
      * all users
      */
     this.getUser = function (req, res) {
-
+        id =
         user.find(function (err, users) {
             if(err)
                 return res.status(400).json(err);
@@ -45,6 +45,8 @@ module.exports = function (user) {
         newUser.last_name = req.body.lname;
         newUser.email  = req.body.email;
         newUser.password = req.body.password;
+        newUser.pic = req.body.pic;
+        newUser.phone = req.body.phone;
 
         newUser.save(function (err) {
             if(err){
@@ -137,8 +139,8 @@ module.exports = function (user) {
      * @returns a json object
      * of the the user details
      */
-    this.getUserById = function (req, res, id) {
-
+    this.getUserById = function (req, res) {
+        id = req.params.id;
         user.findOne({_id : id}, function (err, users) {
             if(err)
                 return res.status(400).json(err);

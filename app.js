@@ -8,6 +8,7 @@ var mongoose = require('mongoose');
 var userRoute = require('./routes/users');
 var assetRoute = require('./routes/assets');
 var categoryRoute = require('./routes/categories');
+var assetsAssignment = require('./routes/assetsAssignment');
 
 var db = require('./models/db_connect');
 db(mongoose, 'andela-inventory');
@@ -25,6 +26,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+
+app.use('/dashboard', assetsAssignment);
 app.use('/dashboard', assetRoute);
 app.use('/dashboard', categoryRoute);
 app.use('/dashboard', userRoute);

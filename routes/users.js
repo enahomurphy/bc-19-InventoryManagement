@@ -14,8 +14,7 @@ router.get('/users', function(req, res) {
 
 router.get('/users/:id', function (req, res) {
 
-    // userController.getUserById(req, res, req.params.id)
-    return res.send(req.query.token)
+    userController.getUserById(req, res);
 
 });
 

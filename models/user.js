@@ -35,7 +35,7 @@ var userSchema = new schema({
     pic : String,
 
     assets :{
-        borrowed : [],
+        borrowed :[{type:String, unique : true}],
         missing : []
     },
 
@@ -57,8 +57,8 @@ userSchema.pre('save', function (next) {
 
     this.updated_at = currentDate;
 
-    if(!$this.created_at){
-        $this.created_at = currentDate;
+    if(!$this.created_at){   $this.created_at = currentDate;
+
     }
     next()
 });
