@@ -18,8 +18,19 @@ var reportSchema = new schema({
         to : user.userSchema,
 
         from : user.userSchema
+    },
+
+    date : {
+        type : Date,
+        default : Date.now
     }
 
+});
+reportSchema.pre('save', function (next) {
+    var currentDate = Date();
+    this.date = currentDate;
+
+    next()
 });
 
 

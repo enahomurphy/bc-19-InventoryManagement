@@ -4,13 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var userRoute = require('./routes/users');
+var assetRoute = require('./routes/assets');
+var categoryRoute = require('./routes/categories');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
-
+var db = require('./models/db_connect');
+db(mongoose, 'andela-inventory');
 var app = express();
 
-mongoose.connect("mongodb:localhost:27017//AndelaInventory");
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -23,7 +25,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+app.use('/dashboard', assetRoute);
+app.use('/dashboard', categoryRoute);
+app.use('/dashboard', userRoute);
 
 
+app.listen(8000);

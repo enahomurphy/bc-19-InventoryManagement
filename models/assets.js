@@ -1,6 +1,8 @@
-const moongoose = require('mongoose');
-const category  = require('./category')
-var schema =  moongoose.Schema;
+const mongoose = require('mongoose');
+const category  = require('./category');
+var schema =  mongoose.Schema;
+
+
 
 var assetsSchema = new schema({
 
@@ -16,33 +18,37 @@ var assetsSchema = new schema({
 
     serial_no :{
         type : String,
-        required : true
+        required : true,
+        unique : true,
     },
+    price : Number,
 
     andela_serial_no : {
         type : String,
-        required : true
+        required : true,
+        unique : true
     },
 
-    belongsTo : category.categorySchema,
+    category : String,
 
     date_bought : Date,
 
-    created_at : {
-        type : Date,
-        default : Date().now
+    created_at : Date,
 
-    },
-
-    updated_at : {
-        type : Date,
-        set : function () {
-            this.updated_at =  Date().now;
-            return this
-        }
-    }
+    updated_at :  Date
 
 });
 
-module.exports = moongoose.model('assets', assetsSchema);
+assetsSchema.pre('save', function (next) {
+    var currentDate = Date();
+
+    this.updated_at = currentDate;
+
+    if(!this.created_at){
+        this.created_at = currentDate;
+    }
+    next()
+});
+module.exports = mongoose.model('assets', assetsSchema);
+module.exports.assetsSchema = assetsSchema;
 

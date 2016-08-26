@@ -15,6 +15,11 @@ var notificationSchema = new schema({
     user : user.userSchema
 
 });
+notificationSchema.pre('save', function (next) {
+    var currentDate = Date();
+    this.date = currentDate;
 
+    next()
+});
 
 module.exports = moongoose.model("notification", notificationSchema);
