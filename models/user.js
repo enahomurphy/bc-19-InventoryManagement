@@ -64,9 +64,12 @@ userSchema.pre('save', function (next) {
 });
 
 userSchema.methods.comparePassword = function (password) {
-    return bcrypt.compareSync(password, this.password)
+    $this = this;
+    return bcrypt.compareSync(password, $this.password)
 };
-
+userSchema.methods.getPass = function () {
+    return this.password
+};
 userSchema.methods.fullName = function(){
     return this.first_name + " " + this.last_name;
 };

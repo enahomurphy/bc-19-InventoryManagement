@@ -13,8 +13,10 @@ module.exports = function (user) {
      * all users
      */
     this.getUser = function (req, res) {
-        id =
-        user.find(function (err, users) {
+
+        var Query = user.find()
+            .select('first_name last_name email pic phone, assets')
+            .exec(function (err, users) {
             if(err)
                 return res.status(400).json(err);
             else{
