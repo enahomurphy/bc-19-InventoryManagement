@@ -40,11 +40,11 @@ module.exports ={
                     if (err) { console.log(err); return done(err); }
                     if (!user) {
                         console.log('user');
-                        return done(null, false, req.flash(  'error', 'invalid email' ));
+                        return done(null, false, null);
                     }
                     if (!user.comparePassword(password)) {
                         console.log('pass');
-                        return done(null, false, req.flash('error', 'invalid email or password' ));
+                        return done(null, false, null);
                     }
                     req.flash('success', 'login successful');
                     return done(null, user);

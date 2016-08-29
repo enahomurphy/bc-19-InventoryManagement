@@ -5,7 +5,7 @@ var passport = require('passport');
 
 
 router.get('/', function (req, res) {
-    return res.send("hello world")
+    res.render('index')
 });
 
 router.get('/dashboard' , function (req, res) {

@@ -1,6 +1,9 @@
 body {
+
     font-size: 16px!important;
     font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+    height: 100%;
 }
 h1,
 h2,
@@ -10,8 +13,19 @@ h5,
 h6 {
     font-family: 'Montserrat', sans-serif;
 }
-.side-nav li{
-
+.header{
+    color : #fff;
+background: url('../img/bg-header.jpg');
+height: 450px;
+}
+.header h3{
+    color: #fff;
+    font-size: 28px;
+}
+.header h2{
+    color: #fff;
+    font-size: 40px;
+    margin-top: 70px;
 }
 .main{
     margin-top: 30px;
@@ -62,4 +76,18 @@ nav .side-nav .collapsible-body {}
     text-decoration: none;
     font-size: 16px;
     color: #ffffff;
+}
+.page-footer{
+    background-color: #3f6b84
+}
+
+.sec{
+    color : black;
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+.sec .material-icons {
+    font-size: 100px;
+    color :#3f6b84!important;
 }

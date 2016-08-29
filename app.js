@@ -46,7 +46,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(expressValidator());
 app.use(cookieParser());
-app.use(session({ secret: 'kjsrjgasdjfgjabjabsdfjbdskajjf' }));
+app.use(session({ secret: 'kjsrjgasdjfgjabjabsdfjbdskajjf' , resave : true
+, saveUninitialized : true}));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
@@ -72,37 +73,6 @@ app.use('/dashboard', userRoute);
 
 
 var secrete = "my_very_secrete_secrete";
-//
-//
-// app.use('/api', auth);
-// app.use('/api',function (req, res, next) {
-//
-//     var token = req.body.token || req.query.token || req.headers['x-access-token'];
-//
-//     if(token){
-//
-//         jwt.verify(token, secrete, function (err, decoded) {
-//             if(err)
-//                 return res.status(403).json({
-//                     success : false,
-//                     message : 'failed to Authenticate token'
-//                 });
-//             else{
-//                 req.decoded = decoded;
-//                 next();
-//             }
-//         })
-//     }else
-//         return res.status(403).json({
-//             success  : false,
-//             message : 'failed to Authenticate no token provided'
-//         });
-// });
-//
-// app.use('/api', assetsAssignment);
-// app.use('/api', assetRoute);
-// app.use('/api', categoryRoute);
-// app.use('/api', userRoute);
 
 
 
