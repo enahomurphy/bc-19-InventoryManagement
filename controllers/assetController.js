@@ -16,12 +16,9 @@ module.exports = function (asset) {
 
         asset.find(function (err, assets) {
             if(err)
-                return res.status(400).json(err);
+                redirect('/dashboard');
             else{
-                return  res.status(200).json({
-                    success : true,
-                    data  : assets
-                });
+                res.render('inventory/all', {data : assets})
             }
         });
 
@@ -46,28 +43,22 @@ module.exports = function (asset) {
         newAsset.serial_no = req.body.serial_no;
         newAsset.price = req.body.price;
         newAsset.andela_serial_no = req.body.andela_serial;
-        newAsset.category = this.getCategory(category, req.body.catId);
+        newAsset.category = req.body.catId;
         newAsset.date_bought = req.body.date_bought;
 
         newAsset.save(function (err, createdAsset) {
             if(err){
                 if(err.code === 11000){
-                    return res.json({
-                        error : "duplicate value",
-                        message : "product with the inserted serial already exits"
-                    })
+                    req.flash('error', 'product already in our database');
+                    res.redirect('/dashboard/assets/create')
                 }else{
-                    return  res.json({
-                        message : 'error creating assets, please fill in in require fields'
-                    })
+                    console.log(err);
+                    req.flash('error', 'fill in all required fields fields');
+                    res.redirect('/dashboard/assets/create')
                 }
             }else{
-                return  res.status(201).json({
-                    success : true,
-                    message : 'assets  created',
-                    dat : createdAsset
-
-                })
+                req.flash('success', 'product added ');
+                res.redirect('/dashboard/assets/create')
             }
         })
     };

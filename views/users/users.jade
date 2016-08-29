@@ -1,0 +1,36 @@
+extends ../layout
+
+block content
+    include ../menu
+
+
+
+    .container
+        .row
+            .col.s12
+                h2 Users
+                table(class="striped")
+
+                    tr
+                        th Name
+                        th Email
+                        th Phone
+                        th Role
+                        th profile
+                    for user in data
+                        tr
+                            td= user.fullName()
+                            td= user.email
+                            if !user.phone
+                                td not available
+                            else
+                                td= user.phone
+                            case user.role
+                                when 1
+                                    td Super Admin
+                                when 2
+                                    td Admin
+                                when 3
+                                    td Staff
+
+                            td: a(href='/dashboard/users/'+user.id) profile

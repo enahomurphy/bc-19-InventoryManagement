@@ -12,13 +12,12 @@ module.exports = function (category) {
     this.getCategory = function (req, res) {
 
         category.find(function (err, categories) {
-            if(err)
-                return res.status(400).json(err);
+            if(err){
+                req.flash('error');
+                redirect('/dashboard/category');
+            }
             else{
-                return  res.status(200).json({
-                    success : true,
-                    data  : categories
-                });
+                res.render('category/all', {data : categories, message:req.flash()})
             }
         });
 
@@ -44,20 +43,15 @@ module.exports = function (category) {
         newCategory.save(function (err, m) {
             if(err){
                 if(err.code === 11000){
-                    return res.json({
-                        message : 'category with this title already exist'
-                    })
+                    req.flash('error');
+                    res.redirect('/dashboard/category/create');
                 }else{
-                    return  res.status(404).json({
-                        message : 'error creating category, please fill in in require fields'
-                    })
+                    req.flash('error' , 'error creating category, please fill in in require fields ')
+                    res.redirect('/dashboard/category/create')
                 }
             }else{
-                return  res.status(201).json({
-                    success : true,
-                    message :m
-
-                })
+                req.flash('success', 'category created');
+                res.redirect('/dashboard/category/create')
             }
         })
     };
@@ -107,23 +101,28 @@ module.exports = function (category) {
      * of the the user details
      */
     this.deleteCategory = function (req, res) {
-
+            console.log(req.query.slug);
         category.findOne({ slug : req.params.slug}, function (err, adCategory) {
-            if (err)
-                return res.status(400).json(err);
+            if (err){
+
+                req.flash('error', "unable to delete");
+                res.redirect('/dashboard/category');
+            }
+
             else {
-                if(!adAsset){
-                    return res.status(404).json({message : "category  not found"})
+                if(!adCategory){
+                    req.flash('error', "category not found");
+                    res.redirect('/dashboard/category');
                 }
                 else {
                     adCategory.remove(function (err) {
                         if(err)
                             return res.status(400).json(err);
-                        else
-                            return res.status(201).json({
-                                success: true,
-                                message: 'category deleted'
-                            })
+                        else{
+                            req.flash('success', "category deleted");
+                            res.redirect('/dashboard/category');
+                        }
+
                     })
 
                 }
@@ -152,6 +151,9 @@ module.exports = function (category) {
         })
 
     };
+
+
+
 
     this.getAssetsInCategory = function (req, res) {
 

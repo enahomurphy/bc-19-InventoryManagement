@@ -8,9 +8,15 @@ var categoryController  = new controller(category);
 
 router.get('/category', function(req, res) {
 
-    categoryController.postCategory(req, res);
+    categoryController.getCategory(req, res);
 
 });
+
+router.get('/category/create', function (req, res) {
+
+    res.render('category/create', {message : req.flash()})
+});
+
 
 router.get('/category/:slug', function (req, res) {
 
@@ -38,9 +44,9 @@ router.put('/category/:slug/update', function (req, res) {
 });
 
 
-router.delete('/assets/:slug/delete', function (req, res) {
+router.get('/category/:slug/delete', function (req, res) {
 
-    assetController.deleteCategory(req, res)
+    categoryController.deleteCategory(req, res)
 
 });
 

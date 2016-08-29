@@ -1,0 +1,43 @@
+extends ../layout
+
+
+block content
+
+    include  ../menu
+    .container.main
+        .row
+            h2 Create A user
+            form(action='/dashboard/users' method='post')
+
+                if message.error
+                    .error: p #{message.error}
+                if message.success
+                    .success: p  #{message.success}
+                .col.s12
+                .input-field.col.s12
+                    input(placeholder='first name' id='first_name' name='fname' type='text' class='validate')
+                    label(for='first_name') First Name
+                .input-field.col.s12
+                    input(placeholder='last name' id='last_name' name='lname' type='text' class='validate')
+                    label(for='last_name') Last Name
+                .input-field.col.s12
+                    input(placeholder='email name' id='email' type='email' name='email' class='validate')
+                    label(for='email') Email
+                .input-field.col.s12
+                    input(placeholder='phone' id='phone' type='number' name='phone' class='validate')
+                    label(for='phone') Phone number
+                .input-field.col.s12
+                    input(placeholder='password' id='password' type='password' name='password' class='validate')
+                    label(for='password') Password
+
+                p
+                    input(name="role" type="radio" value='2' id="role")
+                    label(for="role") Admin
+
+                p
+                    input(name="role" type="radio" value='3' id="role2")
+                    label(for="role2") staff
+
+
+                .input-field.col.s12
+                    input( type='submit' class='btn waves-effect waves-light' )

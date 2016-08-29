@@ -1,12 +1,22 @@
 var express = require('express');
 var router = express.Router();
 var assets = require('../models/assets');
-var users = require('../models/user');
+var Users = require('../models/user');
 var controller = require('../controllers/assetsAssignment');
-var assignAssetController  = new controller(assets, users);
+var assignAssetController  = new controller(assets, Users);
 
 
+router.get('/users/assign', function () {
+    var Query = Users.find().select('_id title');
+    assets.find().select('_id title');
+    Query.exec(function (err, data1) {
 
+        assets.exec(function (err, data2) {
+            conaole.log(data1, data2)
+        });
+
+    })
+});
 
 router.get('/users/:id/assets/', function (req, res) {
 

@@ -1,26 +1,39 @@
 var express = require('express');
 var path = require('path');
+var jwt = require('jsonwebtoken');
+var jade = require('jade');
+var passport = require('passport');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
+var session = require('express-session');
+var flash = require('req-flash');
+var expressValidator = require('express-validator');
+var methodOverride = require('method-override');
+
 var userRoute = require('./routes/users');
 var assetRoute = require('./routes/assets');
 var categoryRoute = require('./routes/categories');
 var assetsAssignment = require('./routes/assetsAssignment');
+var loginRoute = require('./routes/login');
 var auth = require('./routes/auth');
 var db = require('./models/db_connect');
-var jwt = require('jsonwebtoken');
+var isLoggedIn = require('./middleware/passportAuth').isLoggedIn;
+
+
+var loginAuth  = require('./middleware/passportAuth');
 // instantiate the express middleware
 var app = express();
 
-// creates a new express route
-var apiRouter = express.Router();
+var sessionStore = new session.MemoryStore;
 
 //connects to mongo db server
 db(mongoose, 'andela-inventory');
 
+
+app.use(express.static(path.join(__dirname, 'public')));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -30,50 +43,99 @@ app.set('view engine', 'jade');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use(expressValidator());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ secret: 'kjsrjgasdjfgjabjabsdfjbdskajjf' }));
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
+
+app.use(methodOverride('_method'));
+
+
+loginAuth.loginAuth();
 
 
 
-app.use('/api', auth);
+
+app.use('/dashboard' , function (req, res, next) {
+    isLoggedIn(req, res, next)
+});
+
+app.use('/', loginRoute);
+app.use('/dashboard', assetsAssignment);
+app.use('/dashboard', assetRoute);
+app.use('/dashboard', categoryRoute);
+app.use('/dashboard', userRoute);
+
+
 
 var secrete = "my_very_secrete_secrete";
-/*
-*
-*
-*
-*
- */
-app.use(function (req, res, next) {
+//
+//
+// app.use('/api', auth);
+// app.use('/api',function (req, res, next) {
+//
+//     var token = req.body.token || req.query.token || req.headers['x-access-token'];
+//
+//     if(token){
+//
+//         jwt.verify(token, secrete, function (err, decoded) {
+//             if(err)
+//                 return res.status(403).json({
+//                     success : false,
+//                     message : 'failed to Authenticate token'
+//                 });
+//             else{
+//                 req.decoded = decoded;
+//                 next();
+//             }
+//         })
+//     }else
+//         return res.status(403).json({
+//             success  : false,
+//             message : 'failed to Authenticate no token provided'
+//         });
+// });
+//
+// app.use('/api', assetsAssignment);
+// app.use('/api', assetRoute);
+// app.use('/api', categoryRoute);
+// app.use('/api', userRoute);
 
-    var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-    if(token){
 
-        jwt.verify(token, secrete, function (err, decoded) {
-            if(err)
-                return res.status(403).json({
-                    success : false,
-                    message : 'failed to Authenticate token'
-                });
-            else{
-                req.decoded = decoded;
-                next();
-            }
-        })
-    }else
-        return res.status(403).json({
-            success  : false,
-            message : 'failed to Authenticate no token provided'
-        });
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
-app.use('/me', function (req, res) {
-    return res.status(200).send(req.decoded)
-})
-app.use('/api', assetsAssignment);
-app.use('/api', assetRoute);
-app.use('/api', categoryRoute);
-app.use('/api', userRoute);
+
+// error handlers
+
+// development error handler
+// will print stacktrace
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
+}
+
+// production error handler
+// no stacktraces leaked to user
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
 
 
-app.listen(8000);
+module.exports = app;

@@ -1,0 +1,26 @@
+extends ../layout
+
+
+block content
+
+    include  ../menu
+    .container.main
+        .row
+            h2 Create A Category
+            if message.error
+                .error: p #{message.error}
+            if message.success
+                .success: p  #{message.success}
+            form(action='/dashboard/category' method='post')
+                .col.s12
+                .input-field.col.s12
+                    input(placeholder='Title' id='title' name='title' type='text' class='validate')
+                    label(for='title') Title
+                .input-field.col.s12
+                    textarea(placeholder='description' id='description' name='description' class='validate' class='materialize-textarea')
+                    label(for='description') description
+                .input-field.col.s12
+                    input( type='submit' class='btn waves-effect waves-light' )
+
+                    <textarea id="textarea1" class="materialize-textarea"></textarea>
+                    <label for="textarea1">Textarea</label>

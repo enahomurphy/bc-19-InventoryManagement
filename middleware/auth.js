@@ -17,7 +17,7 @@ module.exports = function (req, res, User, jwt, secrete) {
     password = req.body.password;
 
     User.findOne({ email : email})
-        .select('first_name last_name role password')
+        .select('first_name last_name role password _id')
         .exec(function (err, user) {
 
         if(err)
@@ -27,7 +27,7 @@ module.exports = function (req, res, User, jwt, secrete) {
                 error : err
             });
         if(!user)
-            return res.status(404).json({
+            return res.status(403).json({
                 success : false,
                 message : 'Authentication failed user not found'
 
@@ -35,7 +35,7 @@ module.exports = function (req, res, User, jwt, secrete) {
         else if(user){
             validPass = user.comparePassword(password);
             if(!validPass){
-                return res.status(404).json({
+                return res.status(403).json({
                     success : false,
                     message : 'Authentication invalid password',
                     pass : password
@@ -44,9 +44,8 @@ module.exports = function (req, res, User, jwt, secrete) {
             else{
 
                  var  token = jwt.sign({
-                        email  : user.email,
+                        id  : user._id,
                         name : user.fullName()
-                        id : user._id
 
                     }, secrete, {
                      expiresIn : '24h'

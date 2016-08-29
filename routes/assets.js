@@ -14,6 +14,13 @@ router.get('/assets', function(req, res) {
 
 });
 
+
+router.get('/assets/create', function (req, res) {
+    category.find().select().exec(function (err, category) {
+        res.render('inventory/create', { category : category, message : req.flash()})
+    })
+});
+
 router.get('/assets/:id', function (req, res) {
 
     assetController.getAssetById(req, res);
@@ -24,7 +31,6 @@ router.get('/assets/:id', function (req, res) {
 
 router.post('/assets', function (req, res) {
 
-    // console.log(category);
     assetController.postAsset(req, res, category);
 
 });

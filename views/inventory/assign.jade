@@ -1,0 +1,50 @@
+extends ../layout
+
+
+block content
+
+    include  ../menu
+    .container.main
+        .row
+            h2 Create An assets
+            if message.error
+                .error: p #{message.error}
+            if message.success
+                .success: p  #{message.success}
+            form(action='/dashboard/assets' method='post')
+                input-field.col.s12
+                    select(name='catId')
+                        option(value='' disabled selected) select a category
+                        for data in category
+                            option(value="#{data._id}") #{data.title}
+                    label Category
+
+                .input-field.col.s12
+                    select(name='catId')
+                        option(value='' disabled selected) select a category
+                        for data in category
+                            option(value="#{data._id}") #{data.title}
+                    label Category
+
+                .input-field.col.s12
+                    input(placeholder='date bought' id='date' type='date' name='date_bought' class='datepicker')
+                    label(for='date') Reclaim Date
+
+                .col.s12
+                    input( type='submit' class='btn waves-effect waves-light' )
+
+
+
+
+            block footerScript
+                script('application/javascript').
+                    $(document).ready(function () {
+                        $('.datepicker').pickadate({
+                            selectMonths: true, // Creates a dropdown to control month
+                            selectYears: 15 // Creates a dropdown of 15 years to control year
+                        })
+
+
+                        $('select').material_select();
+
+                    })

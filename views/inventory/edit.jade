@@ -1,0 +1,34 @@
+extends ../layout
+
+
+block content
+
+    include  ../menu
+    .container.main
+        .row
+            h2 Create An assets
+            if message.error
+                .error: p #{message.error}
+            if message.success
+                .success: p  #{message.success}
+            form(action='/assets' method='post')
+                .col.s
+                .input-field.col.s12
+                    input(placeholder='asset name' id='name' name="name" type='text' class='validate')
+                    label(for='name') Asset Name
+                .input-field.col.s12
+                    textarea(placeholder='description' id='description' name='description' class='validate' class='materialize-textarea')
+                    label(for='description') description
+                .input-field.col.s12
+                    input(placeholder='serial number' id='serial_no' type='number' class='validate')
+                    label(for='serial_no') Serial Number
+                .input-field.col.s12
+                    input(placeholder='andela serial number' id='andela_serial' type='number' name="andela_serial" class='validate')
+                    label(for='andela_serial') Andela Serial Number
+                .input-field.col.s12
+                    input(placeholder='price' id='price' type='number' class='validate')
+                    label(for='price') Price
+                .input-field.col.s12
+                    input( type='submit' class='btn waves-effect waves-light' )
+
+                .input
