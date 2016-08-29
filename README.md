@@ -3,7 +3,7 @@ Andela inventory management system
 allows Admin to create and manage company assets
 
 ## Application use
-this app is meant to manage all inventory in andela, ranging from creating ,deletion, assigning of assets to staff members and notification of due date fro asset to be returned. only the super adminand admin has right to assign assets to staf members
+this app is meant to manage all inventory in andela, ranging from creating ,deletion, assigning of assets to staff members and notification of due date for asset to be returned. only the super  admin has right to assign assets to staff members
 
 ## Tools Used
 - Node js
