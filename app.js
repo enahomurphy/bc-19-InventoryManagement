@@ -3,7 +3,6 @@ var path = require('path');
 var jwt = require('jsonwebtoken');
 var jade = require('jade');
 var passport = require('passport');
-var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
