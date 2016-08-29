@@ -1,0 +1,64 @@
+
+
+
+block content
+
+    header
+        nav
+            .container
+                ul#slide-out.side-nav
+                    li
+                        .userView
+                            img(class="background" src="/img/user-bg.jpg")
+                            a(href="#!user"): img(class="circle" src="/img/128.jpg")
+                            a(href="#!name"): span(class="white-text name" ) John Does
+                            a(href="#!email"): span(class="white-text email" ) enahomurphy@gmail.com
+
+                    li
+                        a(href="/dashboard") Dashboard
+                    li.no-padding
+                        ul.collapsible.collapsible-accordion
+                            li
+                                a(class="collapsible-header") User
+                                    i.material-icons arrow_drop_down
+                                .collapsible-body
+                                    ul
+                                        li: a(href="/dashboard/users") All users
+                                        li: a(href="/dashboard/users/create") Create User
+
+                    li
+                        ul.collapsible.collapsible-accordion
+                            li
+                                a(class="collapsible-header") Inventory
+                                    i.material-icons arrow_drop_down
+                                .collapsible-body
+                                    ul
+                                        li: a(href="/dashboard/assets") All assets
+                                        li: a(href="/dashboard/assets/create") Create asset
+                                        li: a(href="#") Assigned assets
+                                        li: a(href="#") Un-reclaimed  assets
+
+                    li
+                        ul.collapsible.collapsible-accordion
+                            li
+                                a(class="collapsible-header") Categories
+                                    i.material-icons arrow_drop_down
+                                .collapsible-body
+                                    ul
+                                        li: a(href="/dashboard/category") All categories
+                                        li: a(href="/dashboard/category/create") Create category
+
+
+
+                    li: a(href="/notification") Notifications
+                    li: a(href="/Reports") Reports
+
+                ul.right.hide-on-med-and-down
+                    li: a(href="/logout") logout
+
+                a(href="#" data-activates="slide-out" class="button-menu"): i(class="material-icons") menu
+
+
+b
+
+

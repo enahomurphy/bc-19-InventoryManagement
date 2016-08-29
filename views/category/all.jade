@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    include ../menu
+
+
+
+    .container
+        .row
+            .col.s12
+                h2 Asset Categories
+                if message.error
+                    .error: p #{message.error}
+                if message.success
+                    .success: p  #{message.success}
+
+                if data.length < 0
+                    h2 No category found
+                else
+                    table(class="striped")
+                        tr
+                            th Title
+                            th Description
+                            th Edit
+                            th Delete
+                            th assets
+                        for category in data
+                            tr
+                                td= category.title
+                                td= category.description
+                                td: a(href='/dashboard/category/' + category.slug+'/edit') Edit
+                                td: a(href='/dashboard/category/' + category.slug+'/delete') Delete
+                                td: a(href='/dashboard/users/' + category.slug + '/assets') Assets

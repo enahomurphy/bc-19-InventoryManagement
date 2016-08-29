@@ -1,0 +1,30 @@
+extends ../layout
+
+
+block content
+
+    include  ../menu
+    .container.main
+        .row
+            h2 Edit A user
+            if message.error
+                .error: p #{message.error}
+            if message.success
+                .success: p  #{message.success}
+            form(action='/dashboard/users/#{data._id}/update?_method=PUT' method='post' enctype="application/x-www-form-urlencoded")
+                input(type='hidden' name='_method' value='PUT')
+                .col.s
+                .input-field.col.s12
+                    input(placeholder='first name' id='first_name' type='text' name='fname' class='validate' value='#{data.first_name}')
+                    label(for='first_name') First Name
+                .input-field.col.s12
+                    input(placeholder='last name' id='last_name' type='text' name='lname' class='validate' value='#{data.last_name}')
+                    label(for='last_name') Last Name
+                .input-field.col.s12
+                    input(placeholder='email name' id='email' type='email' name='email' class='validate' value='#{data.email}')
+                    label(for='email') Email
+                .input-field.col.s12
+                    input(placeholder='phone' id='phone' type='number' name='phone' class='validate' value='#{data.phone}')
+                    label(for='phone') Phone number
+                .input-field.col.s12
+                    input( type='submit' class='btn waves-effect waves-light' value='update' )

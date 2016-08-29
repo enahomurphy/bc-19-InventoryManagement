@@ -1,0 +1,9 @@
+assign-assets
+    => POST    /users/:id/assets/:id
+    => DELETE  /users/:id/assets/:id
+    => GET     /users/:id/assets/
+
+
+user-notification
+
+    => GET    /users/:id/notification   get all assets that da

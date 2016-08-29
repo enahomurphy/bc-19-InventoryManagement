@@ -1,0 +1,52 @@
+extends  ../layout
+
+block style
+    style().
+        ul {
+            list-style-type: none;
+        }
+
+block content
+    include ../menu
+
+
+    .container.main
+        .row
+            .col.s6
+                if error
+                    h2 User not found
+                if data
+                    .collection.with-header
+                        li.collection-header
+                            h4 User Details
+                        li.collection-item #{data.fullName()}
+                                a(href='#!' class='secondary-content'): i.material-icons send
+                        li.collection-item #{data.email}
+                                a(href='#!' class='secondary-content'): i.material-icons send
+                        li.collection-item #{data.phone}
+                                a(href='#!' class='secondary-content'): i.material-icons send
+
+
+                        case data.role
+                            when 1
+                                li.collection-item Super Admin
+                                    a(href='#!' class='secondary-content'): i.material-icons send
+                            when 2
+                                li.collection-item Admin
+                                    a(href='#!' class='secondary-content'): i.material-icons send
+                            when 3
+                                li.collection-item Fellow
+                                    a(href='#!' class='secondary-content'): i.material-icons send
+
+
+            .col.s6
+                h4 Assets Assigned
+                table
+                    tr
+                        th name
+                        th price
+                        th return date
+                        th serial no
+
+
+

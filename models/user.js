@@ -1,12 +1,13 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const assets = require('./assets');
 var salt = bcrypt.genSaltSync(10);
 
 var schema =  mongoose.Schema;
 
 var userSchema = new schema({
 
-    fisrt_name : String,
+    first_name : String,
     last_name : String,
     email : {
         type: String,
@@ -14,9 +15,15 @@ var userSchema = new schema({
         required : true,
         unique : true
     },
+
     password : {
         type : String,
         required : true
+    },
+
+    phone : {
+        type : Number,
+        unique : true
     },
     role : {
         type : Number,
@@ -25,34 +32,50 @@ var userSchema = new schema({
         default : 3
     },
 
+    pic : String,
+
+    assets :{
+        borrowed :[{type:String, unique : true}],
+        missing : []
+    },
+
     created_at : {
         type : Date,
         default :  Date().now
-
     },
 
-    updated_at : {
-        type : Date,
-        set : function () {
-            this.updated_at = Date().now;
-            return this;
-        }
-    }
-
+    updated_at : Date
 });
 
 
 userSchema.pre('save', function (next) {
-        var $this = this;
+    var $this = this;
 
-        bcrypt.hashSync(this.password, salt);
-        next()
+    $this.password = bcrypt.hashSync(this.password, salt);
+
+    var currentDate = Date();
+
+    this.updated_at = currentDate;
+
+    if(!$this.created_at){   $this.created_at = currentDate;
+
+    }
+    next()
 });
 
 userSchema.methods.comparePassword = function (password) {
-    return bcrypt.compareSync(password, this.password)
+    $this = this;
+    return bcrypt.compareSync(password, $this.password)
+};
+userSchema.methods.getPass = function () {
+    return this.password
+};
+userSchema.methods.fullName = function(){
+    return this.first_name + " " + this.last_name;
 };
 
-
+userSchema.methods.testHash = function () {
+    return bcrypt.hashSync(this.password, salt);
+};
 module.exports = mongoose.model('users', userSchema);
 module.exports.userSchema = userSchema;

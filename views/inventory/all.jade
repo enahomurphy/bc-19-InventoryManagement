@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    include ../menu
+
+
+
+    .container
+        .row
+            .col.s12
+                h2 All assets
+                table(class="striped")
+
+                    tr
+                        th Name
+                        th description
+                        th serial Number
+                        th price
+                        th andela serial number
+                        th category
+                        th delete
+                        th assign
+
+                    for asset in data
+                        tr
+                            td= asset.name
+                            td= asset.email
+                            td= asset.description
+                            td= asset.serial_no
+                            td= asset.andela_serial_no
+                            td= asset.category
+                            td: a(href='') Delete
+                            td: a(href='') Assign

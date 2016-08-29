@@ -1,0 +1,25 @@
+extends ./layout.jade
+
+
+block style
+    style(type='text/css').
+        body {
+            background: url('img/bg.jpg');
+            background-size: cover;
+        }
+block content
+    .container
+        .row
+            .col.s12
+                form(class="myLogin" method="post" action="/login")
+                    if message.error
+                        .error:  p #{message.failure}
+                    if message.success
+                        .error: p #{message.success}
+
+                    h2 Login
+                    input(type="email" placeholder="Email" name="email")
+                    input(type="password" placeholder="password" name="password")
+                    a(href="#") Forgot password?
+                    button( class="btn waves-effect waves-light" type="submit") login
+

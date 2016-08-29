@@ -11,20 +11,27 @@ var categorySchema = new schema({
     },
     description :String,
 
-    created_at : {
-        type : Date,
-        default : Date().now
-
+    slug :{
+        type : String,
+        unique : true
     },
+    created_at :  Date,
 
-    updated_at : {
-        type : Date,
-        set : function () {
-            this.updated_at = Date().now;
-            return this
-        }
+    updated_at : Date
+
+
+});
+categorySchema.pre('save', function (next) {
+    var currentDate = Date();
+    var slug = this.title.replace(' ', '-');
+
+    this.updated_at = currentDate;
+    this.slug = slug;
+
+    if(!this.created_at){
+        this.created_at = currentDate;
     }
-
+    next()
 });
 
 module.exports = moongoose.model("category", categorySchema);

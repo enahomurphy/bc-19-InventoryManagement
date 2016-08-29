@@ -1,0 +1,14 @@
+extends  ../layout
+
+
+block content
+
+    include ../menu
+
+    if error
+
+        h2 User not found
+
+    if data
+
+        #{data}
